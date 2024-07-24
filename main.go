@@ -94,10 +94,11 @@ func getObjectUrl(key string) (string, error) {
 func AddUrl(data []models.Info) ([]models.Item, error) {
 	var items []models.Item
 	for _, info := range data {
-		objectUrl, err := getObjectUrl(info.Filename)
-		if err != nil {
-			return nil, err
-		}
+		objectUrl := "http://d2hgyikbqxrz2l.cloudfront.net/" + info.Filename
+		//objectUrl, err := getObjectUrl(info.Filename)
+		//if err != nil {
+		//	return nil, err
+		//}
 		items = append(items, models.Item{
 			Info:      info,
 			ObjectUrl: objectUrl,
@@ -156,6 +157,7 @@ func main() {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
+
 		data, err := AddUrl(rawData)
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -185,8 +187,8 @@ func main() {
 			return
 		}
 
-		ctx.JSON(200, gin.H{"msg": file, "text": text, "keyName": keyName})
+		ctx.JSON(200, gin.H{"msg": file, "text": text})
 	})
 
-	r.Run(":8090")
+	r.Run(":8080")
 }
