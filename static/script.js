@@ -4,27 +4,43 @@ document.getElementById("form").addEventListener("submit", function (event) {
     const url = '/api/posts'; // 替换为你的API URL
     const formData = new FormData();
 
+    let textok = false;
+    let fileok = false;
+
     let textInput = document.getElementById("input-text").value;
-    formData.append('text', textInput);
+    if (textInput == null || textInput === "") {
+        alert("please input a message");
+        textok = false;
+    } else {
+        formData.append('text', textInput);
+        textok = true;
+    }
 
     const fileInput = document.getElementById("file-upload");
     if (fileInput.files.length > 0) {
         formData.append('file', fileInput.files[0]);
+        fileok = true;
+    } else {
+        alert("please upload a file.");
+        fileok = false;
     }
 
-    fetch(url, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('成功:', data);
-        location.reload()
+    if (fileok && textok) {
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('成功:', data);
+                location.reload()
 
-    })
-    .catch((error) => {
-        console.error('错误:', error);
-    });
+            })
+            .catch((error) => {
+                console.error('错误:', error);
+            });
+    }
+
 });
 
 fetch("/api/posts", {method: "GET"}).then(function (response) {
