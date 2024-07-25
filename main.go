@@ -68,28 +68,28 @@ func uploadFileToS3(keyName string, fileContent []byte) error {
 	return nil
 }
 
-func getObjectUrl(key string) (string, error) {
-	s3Client, err := createS3Client()
-	if err != nil {
-		return "", err
-	}
-
-	godotenv.Load()
-	bucketName := os.Getenv("BUCKET_NAME")
-
-	presignClient := s3.NewPresignClient(s3Client)
-	request, err := presignClient.PresignGetObject(context.TODO(), &s3.GetObjectInput{
-		Bucket: aws.String(bucketName),
-		Key:    aws.String(key),
-	}, func(opts *s3.PresignOptions) {
-		opts.Expires = time.Duration(3600 * int64(time.Second))
-	})
-	if err != nil {
-		return "", err
-	}
-
-	return request.URL, nil
-}
+//func getObjectUrl(key string) (string, error) {
+//	s3Client, err := createS3Client()
+//	if err != nil {
+//		return "", err
+//	}
+//
+//	godotenv.Load()
+//	bucketName := os.Getenv("BUCKET_NAME")
+//
+//	presignClient := s3.NewPresignClient(s3Client)
+//	request, err := presignClient.PresignGetObject(context.TODO(), &s3.GetObjectInput{
+//		Bucket: aws.String(bucketName),
+//		Key:    aws.String(key),
+//	}, func(opts *s3.PresignOptions) {
+//		opts.Expires = time.Duration(3600 * int64(time.Second))
+//	})
+//	if err != nil {
+//		return "", err
+//	}
+//
+//	return request.URL, nil
+//}
 
 func AddUrl(data []models.Info) ([]models.Item, error) {
 	var items []models.Item
