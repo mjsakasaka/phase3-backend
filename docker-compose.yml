@@ -1,8 +1,15 @@
 services:
   web:
-    build: .
+    image: week1-app-image
+    container_name: week1-app
     ports:
       - "8080:8080"
-    volumes:
-      - .:/app
-    command: sh -c "go mod download && go build -o main . && ./main"
+
+  nginx:
+    image: my-nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
