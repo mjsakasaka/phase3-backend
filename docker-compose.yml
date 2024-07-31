@@ -5,11 +5,11 @@ services:
     ports:
       - "8080:8080"
 
-#  nginx:
-#    image: my-nginx
-#    container_name: nginx
-#    ports:
-#      - "80:80"
-#      - "443:443"
-#    depends_on:
-#      - web
+  nginx:
+    image: my-nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
