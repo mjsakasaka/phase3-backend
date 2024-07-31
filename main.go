@@ -146,10 +146,14 @@ func main() {
 	r := gin.Default()
 
 	r.Static("/static", "./static")
-	r.StaticFile("/loaderio-5402094e37c9a38d5a9c90af4c9fd4f5.txt", "./loaderio/loaderio-5402094e37c9a38d5a9c90af4c9fd4f5.txt")
+	r.StaticFile("/loaderio-106a4e0cd4653b300ab795bf14c268b0.txt", "./loaderio/loaderio-106a4e0cd4653b300ab795bf14c268b0.txt")
 
 	r.GET("/", func(ctx *gin.Context) {
 		http.ServeFile(ctx.Writer, ctx.Request, "./static/index.html")
+	})
+
+	r.GET("/health", func(c *gin.Context) {
+		c.String(http.StatusOK, "OK")
 	})
 
 	r.GET("/api/posts", func(ctx *gin.Context) {
